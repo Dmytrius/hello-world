@@ -6,12 +6,13 @@ module Lab1_2 where
 
 -- Проста реалізація, "найменша кількість коду"
 maxNumber :: Ord a => a -> a -> a -> a
-maxNumber a b c = max a (max b c)
+maxNumber a b c = max a (max b c)  --використання вбудованної функції max та 
+-- використовування функції вищого порядку + рекурсії для привидіння до функції з двома змінними
 
 -- Реалізація, здатна до масштабування задачі, коли, наприклад, потрібен пошук з більшої кількості елементів,
 -- або невідомої на початку кількості елементів
 
-maxNumberList :: Ord x => x -> x
-maxNumberList []       = error ”maximum of empty list”
-maxNumberList [x]      = x
-maxNumberList (x:xs)   = max x (maxNumberList xs)
+maxNumberList :: (Ord a, Num a) => [a] -> a
+maxNumberList [] = error "this list not exist digits"  -- сповіщення на випадок пустого списку
+maxNumberList [x] = x                                  -- якщо елемент один, то повертаємо його
+maxNumberList (x:xs) = max x (maxNumberList xs)        -- рекурсивно відрізаємо "голову" списку, та порівнюємо її з попереднім елементом
