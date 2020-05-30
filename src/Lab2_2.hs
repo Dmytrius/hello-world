@@ -8,9 +8,11 @@
 
 module Lab2_2 where
 
-
 divisors :: Integral a => a -> [a]
 divisors n = [x | x <- [1..(n - 1)], rem n x == 0]
 
-primes = [n | n <- [1..], isPrime n]
-         where isPrime x = (divisors x == [1])
+
+isPrime :: Int -> String
+isPrime n
+    | length (divisors n) == 1 = "This digit is prime"
+    | otherwise = "This digit isn't prime"
