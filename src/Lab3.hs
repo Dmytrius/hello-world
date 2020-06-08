@@ -1,115 +1,60 @@
 -- Для представлених далі задач:
--- а) визначте типи;
--- б) визначте вказані функції;
--- в) визначте хоча б один оператор.
--- Для демонстрації роботи функцій треба створити базу даних у формі
--- списку. Запропонуйте кілька варіантів функції.
--- Фігури на площині. 
--- Використовуються такі фігури, як коло (центр та радіус),
--- прямокутник (координати лівої верхньої та правої нижньої точок), трикутник
--- (координати вершин) та мітка — label (координати лівої нижньої точки, шрифт
--- та рядок). Доступні шрифти — Consolas, Lucida Console та Source Code Pro.
--- Визначне функції для:
--- 1. обчислення площі фігури (для мітки — через розмір одного символу та
--- їх кількість);
+    -- а) визначте типи;
+    -- б) визначте вказані функції;
+    -- в) визначте хоча б один оператор.
+    -- Для демонстрації роботи функцій треба створити базу даних у формі
+    -- списку. Запропонуйте кілька варіантів функції.
+    -- Фігури на площині. 
+    -- Використовуються такі фігури, як коло (центр та радіус),
+    -- прямокутник (координати лівої верхньої та правої нижньої точок), трикутник
+    -- (координати вершин) та мітка — label (координати лівої нижньої точки, шрифт
+    -- та рядок). Доступні шрифти — Consolas, Lucida Console та Source Code Pro.
+    -- Визначне функції для:
+    -- 1. обчислення площі фігури (для мітки — через розмір одного символу та
+    -- їх кількість);
 
 module Lab3 where
 
--- треугольник ------------------------------------------------------------------------
+data Point = Point {x::Int, y::Int} deriving (Eq, Show)
 
-data Tr = ByTr        {
-                          base1  :: (Int, Int),
-                          base2  :: (Int, Int),
-                          base3  :: (Int, Int),
-                          font   :: String,
-                          row    :: Int
-                      } deriving (Show, Read, Eq, Ord)
+data Shape =
+    Circle {center::Point, radius::Float}
+    | Triangle {a::Point, b::Point, c::Point}
+    | Rectangle {a::Point, d::Point}
+    | Label {l::Point, font::String, row::Float}
+        deriving (Eq, Show)
 
-tr1 :: Tr
+square :: Shape -> Int
+square (Circle _ r) = toInt (pi * r**2)
 
-tr1 = ByTr (20, 20) (17, 27) (17, 60) "Source Code Pro" 10
+square (Triangle a b c) 
+            = toInt (sqrt (
+                        fromIntegral (
+                            (semiPerimetr a b c
+                                * (semiPerimetr a b c - (lengthSegment a b)) 
+                                    * (semiPerimetr a b c - (lengthSegment b c)
+                                        * (semiPerimetr a b c - (lengthSegment c b)))
+                            )
+                        )
+                    )
+                )
 
+square (Rectangle point1 point2) = ((x point1) - (x point2)) * ((y point1) - (y point2))
 
-trR :: Tr -> Int -> (Int, Int, Int, Int, Int, Int, String, Int)
+semiPerimetr :: Point -> Point -> Point -> Int
+semiPerimetr a b c = ((lengthSegment a b) + (lengthSegment c b) + (lengthSegment a c))
 
-trR (ByTr (a, b) (c, d) (e, f) s r) step = (a + step, b, c + step, d, e + step, f, s, r)
+lengthSegment :: Point -> Point -> Int
+lengthSegment point1 point2
+            = toInt (sqrt (
+                fromIntegral (
+                    ((diffOrd (x point1) (x point2))) ^ 2
+                        + ((diffOrd (y point1) (y point2))) ^ 2)
+                    )
+            )
 
+diffOrd :: Int -> Int -> Int
+diffOrd o1 o2 = o1 - o2
 
-trL :: Tr -> Int -> (Int, Int, Int, Int, Int, Int, String, Int)
-
-trL (ByTr (a, b) (c, d) (e, f) s r) step = (a - step, b, c - step, d, e - step, f, s, r)
-
-
-trObtaine :: Tr -> (Int, Int, Int, Int, Int, Int, String, Int)
-
-trObtaine (ByTr (a, b) (c, d) (e, f) s r) = (a, b, c, d, e, f, s, r)
-
-----------------------------------------------------------------------------------------
-
-
-
--- прямоугольник ---------------------------------------------------------------------
-
-data Pr = ByPr          {
-                          left   :: Int,
-                          right  :: Int
-                        } deriving (Show, Read, Eq, Ord)
-
-pr1 :: Pr
-
-pr1 = ByPr 12 30
-
-
-prR :: Pr -> Int -> (Int, Int)
-prR  (ByPr a b) step = (a + step, b)
-
-
-prL :: Pr -> Int -> (Int, Int)
-prL  (ByPr a b) step = (a - step, b)
-
-
-prObtaine :: Pr -> (Int, Int)
-prObtaine  (ByPr a b) = (a, b)
-
-----------------------------------------------------------------------------------------------
-
-
--- круг ---------------------------------------------------------------------------------------
-
-
-data Krug = ByKrug     {         
-                          center :: (Int, Int),
-                          radius :: Int
-                        } deriving (Show, Read, Eq, Ord)
-
-
-
-krug1 :: Krug
-
-krug1 = ByKrug   (25, 12)  17
-
-krug2 = ByKrug (14,7)  13
-
-krug3 = ByKrug (16,4)  10
-
-
-krugs :: [Krug]
-
-krugs = [krug1, krug2, krug3]
-
-
-krugR :: Krug  -> Int -> (Int, Int, Int)
-
-krugR  (ByKrug (a, b) r)  step = (a + step, b, r)
-
-
-krugL :: Krug  -> Int -> (Int, Int, Int)
-
-krugL  (ByKrug (a, b) r)  step = (a - step, b, r)
-
-
-krugObtaine :: Krug -> (Int, Int, Int)
-
-krugObtaine  (ByKrug (a, b) r) = (a, b, r)
-
-----------------------------------------------------------------------------------------
+toInt :: Float -> Int
+toInt = round 
