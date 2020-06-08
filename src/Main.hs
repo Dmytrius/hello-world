@@ -1,15 +1,15 @@
 module Main where
 
-import Lab1_1 (lab1_1)
-import Lab1_2 (maxNumber,maxNumberList)
-import Lab2_1 (lastNumber,lastNumberMyFunction,lastNumberMyFunction')
-import Lab2_2 (isPrime)
-import Lab3 (Point,Shape(Circle,Triangle,Rectangle),square)
+import Lab1_1
+import Lab1_2
+import Lab2_1
+import Lab2_2
+import Lab3 
 
-point1 = Point 1 3 
-point2 = Point 7 3
-point3 = Point 7 7
-point4 = Point 7 3 
+point1 = Point 10 30
+point2 = Point 70 30
+point3 = Point 70 70
+point4 = Point 70 30
 
 main:: IO()
 main = do 
@@ -43,7 +43,7 @@ main = do
     print "Lab 3"
     print "(square (Circle point1 6))"
     print (square (Circle point1 6))
-    print "(square (Triangle point1 point2 point3))"
-    print (square (Triangle point1 point2 point3))
     print "(square (Rectangle point1 point4))"
     print (square (Rectangle point1 point4))
+    print "(square (Triangle point1 point2 point3))"
+    print (square (Triangle point1 point2 point3))
