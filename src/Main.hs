@@ -43,7 +43,9 @@ main = do
     print "Lab 3"
     print "(square (Circle point1 6))"
     print (square (Circle point1 6))
+    print "semiPerimetr point1 point2 point3"
+    print (semiPerimetr point1 point2 point3)
     print "(square (Rectangle point1 point4))"
-    print (square (Rectangle point1 point4))
+    print (square (Rectangle point1 point3))
     print "(square (Triangle point1 point2 point3))"
     print (square (Triangle point1 point2 point3))

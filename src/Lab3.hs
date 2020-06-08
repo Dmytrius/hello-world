@@ -32,17 +32,22 @@ square (Triangle a b c)
                         fromIntegral (
                             (semiPerimetr a b c
                                 * (semiPerimetr a b c - (lengthSegment a b)) 
-                                    * (semiPerimetr a b c - (lengthSegment b c)
-                                        * (semiPerimetr a b c - (lengthSegment c b)))
+                                    * (semiPerimetr a b c - (lengthSegment b c))
+                                        * (semiPerimetr a b c - (lengthSegment c b))
                             )
                         )
                     )
                 )
 
-square (Rectangle point1 point2) = ((x point1) - (x point2)) * ((y point1) - (y point2))
+square (Rectangle point1 point2)
+        = (
+            ((x point1) - (x point2))
+                * ((y point1) - (y point2)
+            )
+         )
 
 semiPerimetr :: Point -> Point -> Point -> Int
-semiPerimetr a b c = ((lengthSegment a b) + (lengthSegment c b) + (lengthSegment a c))
+semiPerimetr a b c = ((lengthSegment a b) + (lengthSegment c b) + (lengthSegment a c)) `div` 2
 
 lengthSegment :: Point -> Point -> Int
 lengthSegment point1 point2
