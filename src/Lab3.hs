@@ -26,8 +26,7 @@ data Shape =
 
 square :: Shape -> Int
 square (Circle _ r) = toInt (pi * r**2)
-
-square (Triangle a b c) 
+square (Triangle a b c)
             = toInt (sqrt (
                         fromIntegral (
                             (semiPerimetr a b c
@@ -38,7 +37,6 @@ square (Triangle a b c)
                         )
                     )
                 )
-
 square (Rectangle point1 point2)
         = (
             ((x point1) - (x point2))
